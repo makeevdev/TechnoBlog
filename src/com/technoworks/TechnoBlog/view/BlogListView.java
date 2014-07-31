@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -21,12 +22,13 @@ public class BlogListView {
     private final String TAG_CATEGORIES = "categories";
 
     HashMap<String, ListItem> mapOfPosts;
+    ArrayList<String> slugList;
     JSONArray jsonArrayPosts;
 
 
     public BlogListView() {
         mapOfPosts = new HashMap<String, ListItem>();
-
+        slugList = new ArrayList<String>();
     }
 
 
@@ -59,6 +61,8 @@ public class BlogListView {
 
                     // 3. set data from List do ListView
                     mapOfPosts.put(obj.getString(TAG_SLUG), item);
+                    // 4. ad key(slug) to arraylist
+                    slugList.add(obj.getString(TAG_SLUG));
                 }
 
             } catch (JSONException e) {
@@ -66,5 +70,29 @@ public class BlogListView {
             }
 
         }
+    }
+
+
+    public int size() {
+        return slugList.size();
+    }
+
+    public String getSummary(int i) {
+        return mapOfPosts.get(slugList.get(i)).summary;
+    }
+
+    public String getCategories(int numberOfitem) {
+        String out = "Categories: ";
+        int countOfCategories = mapOfPosts.get(slugList.get(numberOfitem)).categories.size();
+        if (countOfCategories < 2)
+            return "Categories: " + mapOfPosts.get(slugList.get(numberOfitem)).categories.get(0).title;
+        else {
+            for (int i = 0; i < numberOfitem; i++)
+                if (i == numberOfitem - 1)
+                    out += mapOfPosts.get(slugList.get(numberOfitem)).categories.get(0).title + ", ";
+                else
+                    out += mapOfPosts.get(slugList.get(numberOfitem)).categories.get(0).title;
+        }
+        return out;
     }
 }

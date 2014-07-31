@@ -4,10 +4,21 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
         >
-    <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Hello World, ActivityMain"
-            />
+
+    <ScrollView android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+        <LinearLayout
+                android:id="@+id/linLayoutList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
 </LinearLayout>
 

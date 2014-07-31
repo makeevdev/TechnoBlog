@@ -3,6 +3,10 @@ package com.technoworks.TechnoBlog;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import com.technoworks.TechnoBlog.view.BlogListView;
 
 public class ActivityMain extends Activity {
@@ -18,8 +22,10 @@ public class ActivityMain extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        final LinearLayout linLayoutList = (LinearLayout) findViewById(R.id.linLayoutList);
+        final LayoutInflater ltInflater = getLayoutInflater();
 
-        (new Thread() {
+        Thread network = new Thread() { // поток тянет данные с сервера, формирует лист с данными
             @Override
             public void run() {
                 String out = DataSender.getStringFromHTTP("/blag/api/v1.0/posts/");
@@ -27,10 +33,28 @@ public class ActivityMain extends Activity {
                     blogList = new BlogListView();
                     blogList.setPostsData(out);
                     Log.d(ACTIVITY_LOG, "GET completed");
+
+
                 } else
                     Log.d(ACTIVITY_LOG, "GET failed");
             }
-        }).start();
+        };
+        network.start();
+
+        try {
+            network.join();
+        } catch (InterruptedException e) {
+        }
+
+
+        for (int i = 0; i < blogList.size(); i++) {
+            View itemView = ltInflater.inflate(R.layout.item, linLayoutList, false);
+            TextView tvSummary = (TextView) itemView.findViewById(R.id.tvSummary);
+            tvSummary.setText(blogList.getSummary(i));
+            TextView tvCategory = (TextView) itemView.findViewById(R.id.tvCategory);
+            tvCategory.setText(blogList.getCategories(i));
+            linLayoutList.addView(itemView);
+        }
 
 
     }
