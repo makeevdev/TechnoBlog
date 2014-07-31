@@ -1,24 +1,26 @@
 package com.technoworks.TechnoBlog.view;
 
+import java.util.ArrayList;
+
 /**
  * Created by Vladimir on 31.07.2014.
  */
 public class ListItem {
 
-    private String url, tags, slug, summary;
+    public String url, slug, summary;
+    public ArrayList<ItemCategory> categories;
 
-    public ListItem(String slug, String url, String tags, String summary) {
-        this.slug = slug;
+    public ListItem(String url, ItemCategory category, String summary) {
+        categories = new ArrayList<ItemCategory>();
+
         this.url = url;
-        this.tags = tags;
+        this.categories.add(category);
         this.summary = summary;
     }
 
-    public boolean compareSlug(String slugToCompare) {
-        if (this.slug.equals(slugToCompare))
-            return true;
-        else
-            return false;
+
+    public void addCategory(ItemCategory categ) {
+        categories.add(categ);
     }
 
 }
