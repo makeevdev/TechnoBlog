@@ -1,7 +1,7 @@
 package com.technoworks.TechnoBlog.view;
 
 /**
- * Created by user on 31.07.2014.
+ * Created by Vladimir on 31.07.2014.
  */
 public class ListItem {
 
