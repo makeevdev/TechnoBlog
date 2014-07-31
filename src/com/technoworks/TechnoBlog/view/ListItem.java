@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class ListItem {
 
-    public String url, slug, summary;
+    public String url, summary;
     public ArrayList<ItemCategory> categories;
 
     public ListItem(String url, ItemCategory category, String summary) {
