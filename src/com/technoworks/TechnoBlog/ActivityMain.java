@@ -30,6 +30,7 @@ public class ActivityMain extends Activity implements ActionBar.OnNavigationList
     private ProgressBar spinnerRing;
     private TextView.OnClickListener itemOnClick;
     private ArrayList<String> itemList;
+    private ArrayList<Color> colors;
 
 
     @Override
@@ -103,7 +104,17 @@ public class ActivityMain extends Activity implements ActionBar.OnNavigationList
 
                                     itemView.setTag(blogList.slugList.get(counter));
                                     itemView.setOnClickListener(itemOnClick);
+
+                                    if (blogList.getCategories(counter).toLowerCase().contains(("Новости").toLowerCase()))
+                                        itemView.setBackgroundColor(Color.parseColor("#7fb5e5"));
+                                    else if (blogList.getCategories(counter).toLowerCase().contains((CAROLINE_CATEG).toLowerCase()))
+                                        itemView.setBackgroundColor(Color.parseColor("#7fffbb33"));
+                                    else if (blogList.getCategories(counter).toLowerCase().contains((CPP_CATEG).toLowerCase()))
+                                        itemView.setBackgroundColor(Color.parseColor("#7f99CC00"));
+
+
                                     linLayoutList.addView(itemView);
+
                                 }
                                 Log.d(ACTIVITY_LOG, "Drawing completed");
                             }
@@ -140,6 +151,14 @@ public class ActivityMain extends Activity implements ActionBar.OnNavigationList
 
                     itemView.setTag(blogList.slugList.get(counter));
                     itemView.setOnClickListener(itemOnClick);
+
+                    if (blogList.getCategories(counter).toLowerCase().contains(("Новости").toLowerCase()))
+                        itemView.setBackgroundColor(Color.parseColor("#7fb5e5"));
+                    else if (blogList.getCategories(counter).toLowerCase().contains((CAROLINE_CATEG).toLowerCase()))
+                        itemView.setBackgroundColor(Color.parseColor("#7fffbb33"));
+                    else if (blogList.getCategories(counter).toLowerCase().contains((CPP_CATEG).toLowerCase()))
+                        itemView.setBackgroundColor(Color.parseColor("#7f99CC00"));
+
                     linLayoutList.addView(itemView);
                 }
             else {
@@ -155,6 +174,14 @@ public class ActivityMain extends Activity implements ActionBar.OnNavigationList
 
                         itemView.setTag(blogList.slugList.get(counter));
                         itemView.setOnClickListener(itemOnClick);
+
+                        if (blogList.getCategories(counter).toLowerCase().contains(("Новости").toLowerCase()))
+                            itemView.setBackgroundColor(Color.parseColor("#7fb5e5"));
+                        else if (blogList.getCategories(counter).toLowerCase().contains((CAROLINE_CATEG).toLowerCase()))
+                            itemView.setBackgroundColor(Color.parseColor("#7fffbb33"));
+                        else if (blogList.getCategories(counter).toLowerCase().contains((CPP_CATEG).toLowerCase()))
+                            itemView.setBackgroundColor(Color.parseColor("#7f99CC00"));
+
                         linLayoutList.addView(itemView);
                     }
                 }
