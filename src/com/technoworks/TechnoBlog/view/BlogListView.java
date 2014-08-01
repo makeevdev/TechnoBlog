@@ -20,9 +20,8 @@ public class BlogListView {
     private final String TAG_SUMMARY = "summary";
     private final String TAG_TITLE = "title";
     private final String TAG_CATEGORIES = "categories";
-
+    public ArrayList<String> slugList;
     HashMap<String, ListItem> mapOfPosts;
-    ArrayList<String> slugList;
     JSONArray jsonArrayPosts;
 
 
@@ -94,5 +93,9 @@ public class BlogListView {
                     out += mapOfPosts.get(slugList.get(numberOfitem)).categories.get(0).title;
         }
         return out;
+    }
+
+    public String getUrl(int i) {
+        return mapOfPosts.get(slugList.get(i)).url;
     }
 }
