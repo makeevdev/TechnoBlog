@@ -11,12 +11,12 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Summary of the post and blablabla"
-            android:id="@+id/tvSummary"/>
+            android:id="@+id/tvSummary" android:layout_margin="2dp"/>
 
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Categories: news"
-            android:id="@+id/tvCategory"/>
+            android:id="@+id/tvCategory" android:layout_margin="2dp"/>
 </LinearLayout>
