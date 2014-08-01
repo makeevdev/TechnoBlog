@@ -29,11 +29,17 @@ public class ActivityMain extends Activity {
         tvLoadingState = (TextView) findViewById(R.id.tvLoadingState);
         tvLoadingState.invalidate();
 
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
+        createList();
+    }
+
+    private void createList() {
         if (!isDownloaded) {
             Thread network = new Thread() { // поток тянет данные с сервера, формирует лист с данными
                 @Override
@@ -42,22 +48,47 @@ public class ActivityMain extends Activity {
                     if (out != null) {
                         blogList = new BlogListView();
                         blogList.setPostsData(out);
-                        Log.d(ACTIVITY_LOG, "GET completed");
+                        Log.d(ACTIVITY_LOG, "Creating BlogList completed");
                         isDownloaded = true;
+
+                        linLayoutList.post(new Runnable() {
+                            @Override
+                            public void run() { // влезаем в главный поток
+                                for (int i = blogList.size() - 1; i > 0; i--) {
+                                    View itemView = ltInflater.inflate(R.layout.item, linLayoutList, false);
+                                    TextView tvSummary = (TextView) itemView.findViewById(R.id.tvSummary);
+                                    tvSummary.setText(blogList.getSummary(i));
+                                    TextView tvCategory = (TextView) itemView.findViewById(R.id.tvCategory);
+                                    tvCategory.setText(blogList.getCategories(i));
+                                    linLayoutList.addView(itemView);
+                                    linLayoutList.removeView(tvLoadingState);
+                                }
+                                Log.d(ACTIVITY_LOG, "Drawing completed");
+                            }
+                        });
+
 
                     } else
                         Log.d(ACTIVITY_LOG, "GET failed");
+                    tvLoadingState.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            tvLoadingState.setTextColor(Color.RED);
+                            tvLoadingState.setText("Loading failed");
+                        }
+                    });
                 }
             };
             network.start();
 
-
+            /*
             try {
                 network.join();
             } catch (InterruptedException e) {
             }
+            */
 
-
+            /*
             if (isDownloaded) {
 
                 for (int i = blogList.size() - 1; i > 0; i--) {
@@ -70,9 +101,12 @@ public class ActivityMain extends Activity {
                     linLayoutList.removeView(tvLoadingState);
                 }
             } else {
+
                 tvLoadingState.setTextColor(Color.RED);
                 tvLoadingState.setText("Loading failed");
+
             }
+        */
         }
     }
 

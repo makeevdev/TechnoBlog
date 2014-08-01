@@ -1,5 +1,6 @@
 package com.technoworks.TechnoBlog;
 
+import android.util.Log;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -18,16 +19,19 @@ import java.io.UnsupportedEncodingException;
 
 public class DataSender {
     static final String mServerUrl = "http://technoworks.ru";
+    static final String SENDER_TAG = "DataSender";
 
     public static String getStringFromHTTP(String api) {
         HttpClient http = new DefaultHttpClient();
         String output = null;
 
         try {
+            Log.d(SENDER_TAG, "Loading started");
             HttpGet httpGet = new HttpGet(mServerUrl + api);
             HttpResponse httpResponse = http.execute(httpGet);
             HttpEntity httpEntity = httpResponse.getEntity();
             output = EntityUtils.toString(httpEntity, HTTP.UTF_8);
+            Log.d(SENDER_TAG, "Loading completed");
 
         } catch (ClientProtocolException e) {
             e.printStackTrace();
