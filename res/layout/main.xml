@@ -18,8 +18,20 @@
                     android:id="@+id/tvLoadingState"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium" android:layout_margin="2dp"
-                    android:text="Loading posts..." android:layout_gravity="center_horizontal"/>
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:layout_margin="2dp"
+                    android:text="Loading posts..."
+                    android:layout_gravity="center_horizontal"/>
+
+            <ProgressBar
+                    android:id="@+id/spinnerRing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminateDrawable="@drawable/spinner_ring"
+                    android:indeterminateOnly="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:indeterminateDuration="1"/>
 
         </LinearLayout>
 
