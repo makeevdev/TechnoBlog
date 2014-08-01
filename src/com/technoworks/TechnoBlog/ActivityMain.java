@@ -1,5 +1,6 @@
 package com.technoworks.TechnoBlog;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,13 +9,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.technoworks.TechnoBlog.view.BlogListView;
 
-public class ActivityMain extends Activity {
+import java.util.ArrayList;
+
+public class ActivityMain extends Activity implements ActionBar.OnNavigationListener {
     public final String ACTIVITY_LOG = "ActivityMain";
+    private final String ALL_CATEG = "All", NEWS_CATEG = "Новости",
+            CAROLINE_CATEG = "Caroline", CPP_CATEG = "C++";
     public boolean isDownloaded = false;
     public BlogListView blogList;
     LinearLayout linLayoutList;
@@ -23,6 +29,8 @@ public class ActivityMain extends Activity {
     private TextView tvLoadingState;
     private ProgressBar spinnerRing;
     private TextView.OnClickListener itemOnClick;
+    private ArrayList<String> itemList;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,6 +42,20 @@ public class ActivityMain extends Activity {
         ltInflater = getLayoutInflater();
         tvLoadingState = (TextView) findViewById(R.id.tvLoadingState);
         spinnerRing = (ProgressBar) findViewById(R.id.spinnerRing);
+
+        // Set up the actionbar to show dropdown list
+        ActionBar actionBar = getActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+
+        itemList = new ArrayList<String>();
+        itemList.add("All");
+        itemList.add("News");
+        itemList.add("Caroline");
+        itemList.add("C++");
+        ArrayAdapter<String> aAdapt = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
+                android.R.id.text1, itemList);
+        actionBar.setListNavigationCallbacks(aAdapt, this);
     }
 
     @Override
@@ -100,34 +122,55 @@ public class ActivityMain extends Activity {
                 }
             };
             network.start();
-
-            /*
-            try {
-                network.join();
-            } catch (InterruptedException e) {
-            }
-            */
-
-            /*
-            if (isDownloaded) {
-
-                for (int i = blogList.size() - 1; i > 0; i--) {
-                    View itemView = ltInflater.inflate(R.layout.item, linLayoutList, false);
-                    TextView tvSummary = (TextView) itemView.findViewById(R.id.tvSummary);
-                    tvSummary.setText(blogList.getSummary(i));
-                    TextView tvCategory = (TextView) itemView.findViewById(R.id.tvCategory);
-                    tvCategory.setText(blogList.getCategories(i));
-                    linLayoutList.addView(itemView);
-                    linLayoutList.removeView(tvLoadingState);
-                }
-            } else {
-
-                tvLoadingState.setTextColor(Color.RED);
-                tvLoadingState.setText("Loading failed");
-
-            }
-        */
         }
     }
 
+    private void changeCurrentCategory(String choosenCategory) {
+        linLayoutList.removeAllViews();
+        if (blogList != null)
+            if (choosenCategory.equals(ALL_CATEG))
+                for (counter = blogList.size() - 1; counter > 0; counter--) {
+                    View itemView = ltInflater.inflate(R.layout.item, linLayoutList, false);
+
+                    TextView tvSummary = (TextView) itemView.findViewById(R.id.tvSummary);
+                    tvSummary.setText(blogList.getSummary(counter));
+
+                    TextView tvCategory = (TextView) itemView.findViewById(R.id.tvCategory);
+                    tvCategory.setText(blogList.getCategories(counter));
+
+                    itemView.setTag(blogList.slugList.get(counter));
+                    itemView.setOnClickListener(itemOnClick);
+                    linLayoutList.addView(itemView);
+                }
+            else {
+                for (counter = blogList.size() - 1; counter > 0; counter--) {
+                    if (blogList.getCategories(counter).toLowerCase().contains(choosenCategory.toLowerCase())) {
+                        View itemView = ltInflater.inflate(R.layout.item, linLayoutList, false);
+
+                        TextView tvSummary = (TextView) itemView.findViewById(R.id.tvSummary);
+                        tvSummary.setText(blogList.getSummary(counter));
+
+                        TextView tvCategory = (TextView) itemView.findViewById(R.id.tvCategory);
+                        tvCategory.setText(blogList.getCategories(counter));
+
+                        itemView.setTag(blogList.slugList.get(counter));
+                        itemView.setOnClickListener(itemOnClick);
+                        linLayoutList.addView(itemView);
+                    }
+                }
+            }
+        Log.d(ACTIVITY_LOG, "category " + choosenCategory + " filtered");
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+        if (itemPosition >= 0 && itemPosition < itemList.size() && blogList != null) {
+            if (itemPosition == itemList.indexOf("News"))
+                changeCurrentCategory("Новости");
+            else
+                changeCurrentCategory(itemList.get(itemPosition));
+            return true;
+        } else
+            return false;
+    }
 }
