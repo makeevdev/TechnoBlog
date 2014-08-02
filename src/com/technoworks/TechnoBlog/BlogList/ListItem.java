@@ -1,4 +1,4 @@
-package com.technoworks.TechnoBlog.view;
+package com.technoworks.TechnoBlog.BlogList;
 
 import java.util.ArrayList;
 

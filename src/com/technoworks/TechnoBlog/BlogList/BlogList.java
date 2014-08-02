@@ -1,4 +1,4 @@
-package com.technoworks.TechnoBlog.view;
+package com.technoworks.TechnoBlog.BlogList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,7 +13,7 @@ import java.util.Iterator;
  */
 
 
-public class BlogListView {
+public class BlogList {
 
     private final String TAG_URL = "url";
     private final String TAG_SLUG = "slug";
@@ -25,7 +25,7 @@ public class BlogListView {
     JSONArray jsonArrayPosts;
 
 
-    public BlogListView() {
+    public BlogList() {
         mapOfPosts = new HashMap<String, ListItem>();
         slugList = new ArrayList<String>();
     }

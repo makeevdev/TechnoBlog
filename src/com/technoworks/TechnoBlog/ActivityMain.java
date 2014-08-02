@@ -12,7 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import com.technoworks.TechnoBlog.view.BlogListView;
+import com.technoworks.TechnoBlog.BlogList.BlogList;
 
 import java.util.ArrayList;
 
@@ -21,7 +21,7 @@ public class ActivityMain extends Activity implements ActionBar.OnNavigationList
     private final String ALL_CATEG = "All", NEWS_CATEG = "Новости",
             CAROLINE_CATEG = "Caroline", CPP_CATEG = "C++";
     public boolean isDownloaded = false;
-    public BlogListView blogList;
+    public BlogList blogList;
     LinearLayout linLayoutList;
     LayoutInflater ltInflater;
     private int counter;
@@ -81,7 +81,7 @@ public class ActivityMain extends Activity implements ActionBar.OnNavigationList
                 public void run() {
                     String out = DataSender.getStringFromHTTP("/blag/api/v1.0/posts/");
                     if (out != null) {
-                        blogList = new BlogListView();
+                        blogList = new BlogList();
                         blogList.setPostsData(out);
                         Log.d(ACTIVITY_LOG, "Creating BlogList completed");
                         isDownloaded = true;

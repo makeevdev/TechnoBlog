@@ -1,4 +1,4 @@
-package com.technoworks.TechnoBlog.view;
+package com.technoworks.TechnoBlog.BlogList;
 
 /**
  * Created by user on 31.07.2014.

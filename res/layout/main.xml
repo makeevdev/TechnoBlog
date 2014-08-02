@@ -30,8 +30,7 @@
                     android:indeterminateDrawable="@drawable/spinner_ring"
                     android:indeterminateOnly="true"
                     android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
-                    android:indeterminateDuration="1"/>
+                    android:layout_marginTop="20dp"/>
 
         </LinearLayout>
 

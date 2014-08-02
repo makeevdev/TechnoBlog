@@ -2,6 +2,9 @@
 <animated-rotate xmlns:android="http://schemas.android.com/apk/res/android"
                  android:pivotX="50%"
                  android:pivotY="50%"
+                 android:duration="1"
+                 android:fromDegrees="0"
+                 android:toDegrees="1080"
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content">
 
