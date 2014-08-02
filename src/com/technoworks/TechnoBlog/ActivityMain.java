@@ -7,8 +7,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
+import android.view.*;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -63,7 +62,7 @@ public class ActivityMain extends Activity implements ActionBar.OnNavigationList
     public void onResume() {
         super.onResume();
 
-        itemOnClick = new TextView.OnClickListener() {
+        itemOnClick = new LinearLayout.OnClickListener() {
             public void onClick(View v) {
                 int i = blogList.slugList.indexOf(v.getTag());
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://technoworks.ru"
@@ -199,5 +198,41 @@ public class ActivityMain extends Activity implements ActionBar.OnNavigationList
             return true;
         } else
             return false;
+    }
+
+    ///menu
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_activity_actions, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.action_update:
+                updateList();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void updateList() {
+        isDownloaded = false;
+        linLayoutList.removeAllViews();
+        linLayoutList.addView(tvLoadingState);
+        linLayoutList.addView(spinnerRing);
+        tvLoadingState.setTextColor(Color.BLACK);
+        tvLoadingState.setText("Updating posts");
+        blogList = null;
+        getActionBar().setSelectedNavigationItem(itemList.indexOf(ALL_CATEG));
+
+        createList();
     }
 }
